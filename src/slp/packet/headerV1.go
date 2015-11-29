@@ -45,7 +45,7 @@ type HeaderV1 struct {
 }
 
 func (h *HeaderV1) Read(data io.Reader) (err error) {
-	if err = binary.Read(data, binary.BigEndian, &h); err != nil {
+	if err = binary.Read(data, Encoding, &h); err != nil {
 		fmt.Println("Error during parsing HeaderV1 :", err) //TODO Transform in error
 	}
 	return

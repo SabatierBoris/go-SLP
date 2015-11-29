@@ -14,6 +14,8 @@ const (
 	V2 PacketVersion = iota
 )
 
+var Encoding = binary.BigEndian
+
 type Packet struct {
 	Version PacketVersion
 	Header  Header
@@ -22,7 +24,7 @@ type Packet struct {
 func GetPacket(data io.Reader) (p Packet, err error) {
 	var v PacketVersion
 
-	if err = binary.Read(data, binary.BigEndian, &v); err != nil {
+	if err = binary.Read(data, Encoding, &v); err != nil {
 		err = fmt.Errorf("Error during parsing packet version : ", err)
 		return
 	}
