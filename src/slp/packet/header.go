@@ -21,7 +21,7 @@ func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 	headers.Lock()
 	headers.m[version] = constructor
 	headers.Unlock()
-	fmt.Println("Header V", version, " is registered")
+	fmt.Printf("Header V%d is registered\n", version)
 }
 
 func GetHeader(id PacketVersion) (h Header, err error) {
