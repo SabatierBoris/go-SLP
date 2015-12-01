@@ -13,9 +13,9 @@ type Header interface {
 type HeaderContructor func() Header
 
 var headers = struct {
-	m map[PacketVersion]HeaderContructor
+	m [NB_VERSION]HeaderContructor
 	sync.RWMutex
-}{m: make(map[PacketVersion]HeaderContructor)}
+}{}
 
 func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 	headers.Lock()
@@ -26,10 +26,14 @@ func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 
 func GetHeader(id PacketVersion) (h Header, err error) {
 	err = nil
+	if id > NB_VERSION {
+		err = fmt.Errorf("SLP V%d is not supported", id)
+		return
+	}
 	headers.RLock()
-	ctor, ok := headers.m[id]
+	ctor := headers.m[id]
 	headers.RUnlock()
-	if !ok {
+	if ctor == nil {
 		err = fmt.Errorf("SLP V%d is not supported", id)
 		return
 	}

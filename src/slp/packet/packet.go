@@ -9,9 +9,10 @@ import (
 type PacketVersion uint8
 
 const (
-	_  PacketVersion = iota
-	V1 PacketVersion = iota
-	V2 PacketVersion = iota
+	_          PacketVersion = iota
+	V1         PacketVersion = iota
+	V2         PacketVersion = iota
+	NB_VERSION PacketVersion = iota
 )
 
 var Encoding = binary.BigEndian
