@@ -8,6 +8,7 @@ import (
 
 type Header interface {
 	Read(io.Reader) error
+	GetFunction() Function
 }
 
 type HeaderContructor func() Header

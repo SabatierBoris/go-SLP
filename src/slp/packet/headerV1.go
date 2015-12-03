@@ -6,21 +6,6 @@ import (
 	"io"
 )
 
-type Function uint8
-
-const (
-	SrvReq      Function = 1
-	SrvRply     Function = 2
-	SrvReg      Function = 3
-	SrvDereg    Function = 4
-	SrvAck      Function = 5
-	AttrRqst    Function = 6
-	AttrRply    Function = 7
-	DAAdvert    Function = 8
-	SrvTypeRqst Function = 9
-	SrvTypeRply Function = 10
-)
-
 type HeaderFlags uint8
 
 const (
@@ -45,9 +30,15 @@ type HeaderV1 struct {
 }
 
 func (h *HeaderV1) Read(data io.Reader) (err error) {
-	if err = binary.Read(data, Encoding, &h); err != nil {
-		fmt.Println("Error during parsing HeaderV1 :", err) //TODO Transform in error
+	if err = binary.Read(data, Encoding, h); err != nil {
+		err = fmt.Errorf("Error during parsing HeaderV1 : %s", err)
+		return
 	}
+	return
+}
+
+func (h *HeaderV1) GetFunction() (f Function) {
+	f = h.Function
 	return
 }
 
