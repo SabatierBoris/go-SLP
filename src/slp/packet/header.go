@@ -27,7 +27,7 @@ func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 
 func GetHeader(id PacketVersion) (h Header, err error) {
 	err = nil
-	if id > NB_VERSION {
+	if id >= NB_VERSION {
 		err = fmt.Errorf("SLP V%d is not supported", id)
 		return
 	}
