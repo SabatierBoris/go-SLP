@@ -24,3 +24,53 @@ func TestVersionUnsupported(t *testing.T) {
 		t.Errorf("Test failed, expected an error, got:  '%s'", p)
 	}
 }
+
+func TestNoData(t *testing.T) {
+	data := []byte{}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestMissingError(t *testing.T) {
+	data := []byte{0x01}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestFunctionUnknow(t *testing.T) {
+	data := []byte{0x01, 0xFF, 0x00, 0x0D, 0x00, 0x00, 'e', 'n', 0x00, 0x03, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestErrorFunctionParsing(t *testing.T) {
+	data := []byte{0x01, 0x05, 0x00, 0x0D, 0x00, 0x00, 'e', 'n', 0x00, 0x03, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestErrorFunctionUnsupported(t *testing.T) {
+	data := []byte{0x01, 0x01, 0x00, 0x0D, 0x00, 0x00, 'e', 'n', 0x00, 0x03, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
