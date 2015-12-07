@@ -9,14 +9,14 @@ import (
 type HeaderFlags uint8
 
 const (
-	_      HeaderFlags = 1 << iota
-	_      HeaderFlags = 1 << iota
-	_      HeaderFlags = 1 << iota
-	FlagsF HeaderFlags = 1 << iota
-	FlagsA HeaderFlags = 1 << iota
-	FlagsU HeaderFlags = 1 << iota
-	FlagsM HeaderFlags = 1 << iota
-	FlagsO HeaderFlags = 1 << iota
+	_         HeaderFlags = 1 << iota //0x01
+	_         HeaderFlags = 1 << iota //0x02
+	_         HeaderFlags = 1 << iota //0x04
+	V1_FlagsF HeaderFlags = 1 << iota //0x08
+	V1_FlagsA HeaderFlags = 1 << iota //0x10
+	V1_FlagsU HeaderFlags = 1 << iota //0x20
+	V1_FlagsM HeaderFlags = 1 << iota //0x40
+	V1_FlagsO HeaderFlags = 1 << iota //0x80
 )
 
 type HeaderV1 struct {
@@ -27,6 +27,16 @@ type HeaderV1 struct {
 	Language_code uint16
 	Char_encoding uint16
 	Xid           uint16
+}
+
+func (h *HeaderV1) HasFlags(f HeaderFlags) (r bool, err error) {
+	r = ((h.Flags & f) == f)
+	return
+}
+
+func (h *HeaderV1) GetFlags() (f HeaderFlags, err error) {
+	f = h.Flags
+	return
 }
 
 func (h *HeaderV1) Read(data io.Reader) (err error) {
