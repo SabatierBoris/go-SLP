@@ -124,7 +124,33 @@ func TestV1Flags(t *testing.T) {
 }
 
 func TestV1LanguageCode(t *testing.T) {
-	// TODO
+	var datas = []struct {
+		data   []byte
+		result string
+	}{
+		{[]byte{0x01, 0x05, 0x00, 0x0E, 0x00, 0x00, 'e', 'n', 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}, "en"},
+		{[]byte{0x01, 0x05, 0x00, 0x0E, 0x00, 0x00, 'f', 'r', 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}, "fr"},
+	}
+	for _, infos := range datas {
+		buf := bytes.NewReader(infos.data)
+		p, err := GetPacket(buf)
+		if err != nil {
+			t.Errorf("Test failed, expected no error, got:  '%s'", err)
+		}
+		if p.Version != V1 {
+			t.Errorf("Test failed, expected packet version : '%d' , got:  '%d'", V1, p.Version)
+		}
+		if f := p.Header.GetFunction(); f != SrvAck {
+			t.Errorf("Test failed, expected Function : '%d' , got:  '%d'", SrvAck, f)
+		}
+		tmp, err := p.Header.GetLanguageCode()
+		if err != nil {
+			t.Errorf("Test failed, got a unexpected error '%s'", err)
+		}
+		if tmp != infos.result {
+			t.Errorf("Test failed, expected flags : '%d' , got:  '%d'", infos.result, tmp)
+		}
+	}
 }
 
 func TestV1CharacterEncoding(t *testing.T) {
