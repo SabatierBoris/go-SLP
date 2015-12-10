@@ -24,7 +24,7 @@ type HeaderV1 struct {
 	Length        uint16
 	Flags         HeaderFlags
 	Dialect       uint8
-	Language_code uint16
+	Language_code [2]byte
 	Char_encoding uint16
 	Xid           uint16
 }
@@ -36,6 +36,11 @@ func (h *HeaderV1) HasFlags(f HeaderFlags) (r bool, err error) {
 
 func (h *HeaderV1) GetFlags() (f HeaderFlags, err error) {
 	f = h.Flags
+	return
+}
+
+func (h *HeaderV1) GetLanguageCode() (r string, err error) {
+	r = string(h.Language_code[:2])
 	return
 }
 
