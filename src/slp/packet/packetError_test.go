@@ -74,3 +74,33 @@ func TestErrorFunctionUnsupported(t *testing.T) {
 		t.Errorf("Test failed, expected an error, got:  '%s'", p)
 	}
 }
+
+func TestErrorV1Flags(t *testing.T) {
+	data := []byte{0x01, 0x05, 0x00, 0x0E, 0x02, 0x00, 'e', 'n', 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestErrorV1Dialect(t *testing.T) {
+	data := []byte{0x01, 0x05, 0x00, 0x0E, 0x00, 0x01, 'e', 'n', 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestErrorV1LanguageCode(t *testing.T) {
+	data := []byte{0x01, 0x05, 0x00, 0x0E, 0x00, 0x00, 'z', 'z', 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
