@@ -48,6 +48,10 @@ func GetPacket(data io.Reader) (p Packet, err error) {
 		err = fmt.Errorf("Error during parsing header : %s", err)
 		return
 	}
+	if err = h.Validate(); err != nil {
+		err = fmt.Errorf("Error during validation of the header : %s", err)
+		return
+	}
 	p.Header = h
 
 	var f SLPFunction

@@ -12,6 +12,7 @@ type Header interface {
 	HasFlags(HeaderFlags) (bool, error)
 	GetFlags() (HeaderFlags, error)
 	GetLanguageCode() (string, error)
+	Validate() error
 }
 
 type HeaderContructor func() Header
