@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"regexp"
 )
 
 type HeaderFlags uint8
@@ -202,6 +203,11 @@ func (h *HeaderV1) GetFlags() (f HeaderFlags, err error) {
 
 func (h *HeaderV1) GetLanguageCode() (r string, err error) {
 	r = string(h.Language_code[:2])
+	re := regexp.MustCompile("^[a-zA-Z0-9_]{2}$")
+	if !re.MatchString(r) {
+		err = fmt.Errorf("Error LanguageCode ins't set")
+		return
+	}
 	return
 }
 
