@@ -95,7 +95,17 @@ func TestErrorV1Dialect(t *testing.T) {
 	}
 }
 
-func TestErrorV1LanguageCode(t *testing.T) {
+func TestErrorV1NoLanguageCode(t *testing.T) {
+	data := []byte{0x01, 0x05, 0x00, 0x0E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}
+	buf := bytes.NewReader(data)
+
+	p, err := GetPacket(buf)
+	if err == nil {
+		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+}
+
+func TestErrorV1UnknownLanguageCode(t *testing.T) {
 	data := []byte{0x01, 0x05, 0x00, 0x0E, 0x00, 0x00, 'z', 'z', 0x00, 0x03, 0x00, 0x00, 0x00, 0x00}
 	buf := bytes.NewReader(data)
 
