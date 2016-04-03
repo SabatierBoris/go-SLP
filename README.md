@@ -16,11 +16,14 @@ Other implementation:
  - C and Java : http://www.openslp.org (last update 2012)
 
 ## Task list
- - Packet formator and disector
- - UA lib
- - UA example
- - SA lib
- - SA example
- - DA lib
- - DA
-
+ - Packet formator and disector -> This repo
+ - Usage example -> TODO
+ - SLP-UserAgent repo -> TODO
+    - lib -> TODO
+    - Usage example -> TODO
+ - SLP-ServiceAgent repo -> TODO
+    - lib -> TODO
+    - Usage example -> TODO
+ - SLP-DirectoryAgent repo -> TODO
+    - lib -> TODO
+    - Usage example -> TODO
