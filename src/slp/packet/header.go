@@ -3,6 +3,7 @@ package packet
 import (
 	"fmt"
 	"io"
+	"log"
 	"sync"
 )
 
@@ -26,7 +27,7 @@ func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 	headers.Lock()
 	headers.m[version] = constructor
 	headers.Unlock()
-	fmt.Printf("Header V%d is registered\n", version)
+	log.Printf("Header V%d is registered\n", version)
 }
 
 func GetHeader(id PacketVersion) (h Header, err error) {

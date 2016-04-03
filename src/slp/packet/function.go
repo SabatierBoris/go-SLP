@@ -3,6 +3,7 @@ package packet
 import (
 	"fmt"
 	"io"
+	"log"
 	"sync"
 )
 
@@ -38,7 +39,7 @@ func RegisterFunction(version PacketVersion, function Function, constructor Func
 	functions.Lock()
 	functions.m[version][function] = constructor
 	functions.Unlock()
-	fmt.Printf("Function %d (V%d) is registered\n", function, version)
+	log.Printf("Function %d (V%d) is registered\n", function, version)
 }
 
 func GetFunction(id PacketVersion, function Function) (f SLPFunction, err error) {
