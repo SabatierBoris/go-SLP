@@ -43,10 +43,6 @@ func RegisterFunction(version PacketVersion, function Function, constructor Func
 
 func GetFunction(id PacketVersion, function Function) (f SLPFunction, err error) {
 	err = nil
-	if id >= NB_VERSION {
-		err = fmt.Errorf("SLP V%d is not supported", id)
-		return
-	}
 	if function >= NB_FUNCTION {
 		err = fmt.Errorf("SLP function %d is not supported", function)
 		return
