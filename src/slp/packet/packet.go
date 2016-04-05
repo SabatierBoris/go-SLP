@@ -40,7 +40,6 @@ func GetPacket(data io.Reader) (p Packet, err error) {
 
 	var h Header
 	if h, err = GetHeader(p.Version); err != nil {
-		err = fmt.Errorf("Error during getting header type : %s", err)
 		return
 	}
 	if err = h.Read(data); err != nil {

@@ -9,9 +9,12 @@ func TestVersionUnknow(t *testing.T) {
 	data := []byte{0xFF}
 	buf := bytes.NewReader(data)
 
-	p, err := GetPacket(buf) //TODO Check if the err is the right one
+	p, err := GetPacket(buf)
 	if err == nil {
 		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+	}
+	if _, ok := err.(*VersionError); !ok {
+		t.Errorf("Test failed, expected an versionError, got:  '%s'", err)
 	}
 }
 

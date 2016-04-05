@@ -23,6 +23,14 @@ var headers = struct {
 	sync.RWMutex
 }{}
 
+type VersionError struct {
+	version PacketVersion
+}
+
+func (e *VersionError) Error() string {
+	return fmt.Sprintf("SLP V%d isn't supported", e.version)
+}
+
 func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 	headers.Lock()
 	headers.m[version] = constructor
@@ -33,14 +41,14 @@ func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 func GetHeader(id PacketVersion) (h Header, err error) {
 	err = nil
 	if id >= NB_VERSION {
-		err = fmt.Errorf("SLP V%d is not supported", id)
+		err = &VersionError{id}
 		return
 	}
 	headers.RLock()
 	ctor := headers.m[id]
 	headers.RUnlock()
 	if ctor == nil {
-		err = fmt.Errorf("SLP V%d is not supported", id)
+		err = &VersionError{id}
 		return
 	}
 	h = ctor()
