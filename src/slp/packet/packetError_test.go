@@ -16,6 +16,7 @@ func TestVersionUnknow(t *testing.T) {
 	if _, ok := err.(*VersionError); !ok {
 		t.Errorf("Test failed, expected an versionError, got:  '%s'", err)
 	}
+	t.Logf("Got the error %s", err)
 }
 
 func TestVersionUnsupported(t *testing.T) {
