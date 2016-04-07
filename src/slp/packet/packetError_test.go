@@ -2,44 +2,30 @@ package packet
 
 import (
 	"bytes"
+	"reflect"
 	"testing"
 )
 
-func TestVersionUnknow(t *testing.T) {
-	data := []byte{0xFF}
-	buf := bytes.NewReader(data)
-
-	p, err := GetPacket(buf)
-	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%v'", p)
+func TestVersionToto(t *testing.T) {
+	var datas = []struct {
+		data   []byte
+		result error
+	}{
+		{[]byte{0xFF}, &VersionError{}},
+		{[]byte{0x02}, &VersionError{}},
+		{[]byte{}, &ReadError{}},
 	}
-	if _, ok := err.(*VersionError); !ok {
-		t.Errorf("Test failed, expected an versionError, got:  '%s'", err)
-	}
-	t.Logf("Got the error %s", err)
-}
 
-func TestVersionUnsupported(t *testing.T) {
-	data := []byte{0x02}
-	buf := bytes.NewReader(data)
-
-	p, err := GetPacket(buf)
-	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%v'", p)
-	}
-	if _, ok := err.(*VersionError); !ok {
-		t.Errorf("Test failed, expected an versionError, got:  '%s'", err)
-	}
-	t.Logf("Got the error %s", err)
-}
-
-func TestNoData(t *testing.T) {
-	data := []byte{}
-	buf := bytes.NewReader(data)
-
-	p, err := GetPacket(buf) //TODO Check if the err is the right one
-	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%v'", p)
+	for _, infos := range datas {
+		buf := bytes.NewReader(infos.data)
+		p, err := GetPacket(buf)
+		if err == nil {
+			t.Errorf("Test failed, expected an error, got:  '%v'", p)
+		}
+		if reflect.TypeOf(err) != reflect.TypeOf(infos.result) {
+			t.Errorf("Test failed, expected an %s, got:  '%s'", reflect.TypeOf(infos.result), err)
+		}
+		t.Logf("Got the error %s", err)
 	}
 }
 
