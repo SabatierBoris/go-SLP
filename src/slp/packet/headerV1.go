@@ -10,24 +10,24 @@ import (
 type HeaderFlags uint8
 
 const (
-	_         HeaderFlags = 1 << iota //0x01
-	_         HeaderFlags = 1 << iota //0x02
-	_         HeaderFlags = 1 << iota //0x04
-	V1_FlagsF HeaderFlags = 1 << iota //0x08
-	V1_FlagsA HeaderFlags = 1 << iota //0x10
-	V1_FlagsU HeaderFlags = 1 << iota //0x20
-	V1_FlagsM HeaderFlags = 1 << iota //0x40
-	V1_FlagsO HeaderFlags = 1 << iota //0x80
+	_        HeaderFlags = 1 << iota //0x01
+	_        HeaderFlags = 1 << iota //0x02
+	_        HeaderFlags = 1 << iota //0x04
+	V1FlagsF HeaderFlags = 1 << iota //0x08
+	V1FlagsA HeaderFlags = 1 << iota //0x10
+	V1FlagsU HeaderFlags = 1 << iota //0x20
+	V1FlagsM HeaderFlags = 1 << iota //0x40
+	V1FlagsO HeaderFlags = 1 << iota //0x80
 )
 
 type HeaderV1 struct {
-	Function      Function
-	Length        uint16
-	Flags         HeaderFlags
-	Dialect       uint8
-	Language_code [2]byte
-	Char_encoding uint16
-	Xid           uint16
+	Function     Function
+	Length       uint16
+	Flags        HeaderFlags
+	Dialect      uint8
+	LanguageCode [2]byte
+	CharEncoding uint16
+	Xid          uint16
 }
 
 var SupportedLanguages = map[string]string{
@@ -202,7 +202,7 @@ func (h *HeaderV1) GetFlags() (f HeaderFlags, err error) {
 }
 
 func (h *HeaderV1) GetLanguageCode() (r string, err error) {
-	r = string(h.Language_code[:2])
+	r = string(h.LanguageCode[:2])
 	re := regexp.MustCompile("^[a-zA-Z0-9_]{2}$")
 	if !re.MatchString(r) {
 		err = fmt.Errorf("Error LanguageCode ins't set")

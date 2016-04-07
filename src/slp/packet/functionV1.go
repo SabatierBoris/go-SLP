@@ -9,13 +9,13 @@ import (
 type ErrorCode uint16
 
 const (
-	V1_SUCCESS                = iota
-	V1_PROTOCOL_PARSE_ERROR   = iota
-	V1_INVALID_REGISTRATION   = iota
-	V1_SCOPE_NOT_SUPPORTED    = iota
-	V1_CHARSET_NOT_UNDERSTOOD = iota
-	V1_AUTHENTICATION_ABSENT  = iota
-	V1_AUTHENTICATION_FALIED  = iota
+	V1Success              = iota
+	V1ProtocolParseError   = iota
+	V1InvalidRegistration  = iota
+	V1ScopeNotSupported    = iota
+	V1CharsetNotUnderstood = iota
+	V1AuthenticationAbsent = iota
+	V1AuthenticationFalied = iota
 )
 
 type SrvAckV1 struct {

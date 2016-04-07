@@ -19,7 +19,7 @@ type Header interface {
 type HeaderContructor func() Header
 
 var headers = struct {
-	m [NB_VERSION]HeaderContructor
+	m [NbVersion]HeaderContructor
 	sync.RWMutex
 }{}
 
@@ -40,7 +40,7 @@ func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
 
 func GetHeader(id PacketVersion) (h Header, err error) {
 	err = nil
-	if id >= NB_VERSION {
+	if id >= NbVersion {
 		err = &VersionError{id}
 		return
 	}

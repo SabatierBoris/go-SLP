@@ -21,7 +21,7 @@ const (
 	DAAdvert    Function = iota
 	SrvTypeRqst Function = iota
 	SrvTypeRply Function = iota
-	NB_FUNCTION Function = iota
+	NbFunction  Function = iota
 )
 
 type SLPFunction interface {
@@ -31,7 +31,7 @@ type SLPFunction interface {
 type FunctionContructor func() SLPFunction
 
 var functions = struct {
-	m [NB_VERSION][NB_FUNCTION]FunctionContructor
+	m [NbVersion][NbFunction]FunctionContructor
 	sync.RWMutex
 }{}
 
@@ -44,7 +44,7 @@ func RegisterFunction(version PacketVersion, function Function, constructor Func
 
 func GetFunction(id PacketVersion, function Function) (f SLPFunction, err error) {
 	err = nil
-	if function >= NB_FUNCTION {
+	if function >= NbFunction {
 		err = fmt.Errorf("SLP function %d is not supported", function)
 		return
 	}

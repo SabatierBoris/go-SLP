@@ -11,10 +11,10 @@ type PacketVersion uint8
 
 // Values of supported SLP version.
 const (
-	_          PacketVersion = iota
-	V1         PacketVersion = iota
-	V2         PacketVersion = iota
-	NB_VERSION PacketVersion = iota
+	_         PacketVersion = iota
+	V1        PacketVersion = iota
+	V2        PacketVersion = iota
+	NbVersion PacketVersion = iota
 )
 
 var Encoding = binary.BigEndian

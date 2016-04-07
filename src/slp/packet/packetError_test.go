@@ -11,7 +11,7 @@ func TestVersionUnknow(t *testing.T) {
 
 	p, err := GetPacket(buf)
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 	if _, ok := err.(*VersionError); !ok {
 		t.Errorf("Test failed, expected an versionError, got:  '%s'", err)
@@ -23,9 +23,9 @@ func TestVersionUnsupported(t *testing.T) {
 	data := []byte{0x02}
 	buf := bytes.NewReader(data)
 
-	p, err := GetPacket(buf) //TODO Check if the err is the right one
+	p, err := GetPacket(buf)
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 	if _, ok := err.(*VersionError); !ok {
 		t.Errorf("Test failed, expected an versionError, got:  '%s'", err)
@@ -39,7 +39,7 @@ func TestNoData(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -49,7 +49,7 @@ func TestMissingError(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -59,7 +59,7 @@ func TestFunctionUnknow(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -69,7 +69,7 @@ func TestErrorFunctionParsing(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -79,7 +79,7 @@ func TestErrorFunctionUnsupported(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -89,7 +89,7 @@ func TestErrorV1Flags(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -99,7 +99,7 @@ func TestErrorV1Dialect(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -109,7 +109,7 @@ func TestErrorV1NoLanguageCode(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
@@ -119,6 +119,6 @@ func TestErrorV1UnknownLanguageCode(t *testing.T) {
 
 	p, err := GetPacket(buf) //TODO Check if the err is the right one
 	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%s'", p)
+		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
