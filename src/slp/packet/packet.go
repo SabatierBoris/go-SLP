@@ -19,6 +19,13 @@ const (
 
 var Encoding = binary.BigEndian
 
+type ReadError struct {
+}
+
+func (e *ReadError) Error() string {
+	return "Cannot read data"
+}
+
 // Packet is the main struct for SLP packet.
 // It's generique depending of the Version
 // and Function
@@ -33,7 +40,7 @@ func GetPacket(data io.Reader) (p Packet, err error) {
 	var v Version
 
 	if err = binary.Read(data, Encoding, &v); err != nil {
-		err = fmt.Errorf("Error during parsing packet version : %s", err)
+		err = &ReadError{}
 		return
 	}
 	p.Version = v
