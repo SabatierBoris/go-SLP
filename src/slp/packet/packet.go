@@ -6,31 +6,31 @@ import (
 	"io"
 )
 
-// PacketVersion is use for get the version of a packet.
-type PacketVersion uint8
+// Version is use for get the version of a packet.
+type Version uint8
 
 // Values of supported SLP version.
 const (
-	_         PacketVersion = iota
-	V1        PacketVersion = iota
-	V2        PacketVersion = iota
-	NbVersion PacketVersion = iota
+	_         Version = iota
+	V1        Version = iota
+	V2        Version = iota
+	NbVersion Version = iota
 )
 
 var Encoding = binary.BigEndian
 
 // Packet is the main struct for SLP packet.
-// It's generique depending of the packetVersion
+// It's generique depending of the Version
 // and Function
 type Packet struct {
-	Version PacketVersion
+	Version Version
 	Header  Header
 	Data    SLPFunction
 }
 
 // GetPacket create a Packet with data read in a io.Reader.
 func GetPacket(data io.Reader) (p Packet, err error) {
-	var v PacketVersion
+	var v Version
 
 	if err = binary.Read(data, Encoding, &v); err != nil {
 		err = fmt.Errorf("Error during parsing packet version : %s", err)

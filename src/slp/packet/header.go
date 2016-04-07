@@ -24,21 +24,21 @@ var headers = struct {
 }{}
 
 type VersionError struct {
-	version PacketVersion
+	version Version
 }
 
 func (e *VersionError) Error() string {
 	return fmt.Sprintf("SLP V%d isn't supported", e.version)
 }
 
-func RegisterHeader(version PacketVersion, constructor HeaderContructor) {
+func RegisterHeader(version Version, constructor HeaderContructor) {
 	headers.Lock()
 	headers.m[version] = constructor
 	headers.Unlock()
 	log.Printf("Header V%d is registered\n", version)
 }
 
-func GetHeader(id PacketVersion) (h Header, err error) {
+func GetHeader(id Version) (h Header, err error) {
 	err = nil
 	if id >= NbVersion {
 		err = &VersionError{id}
