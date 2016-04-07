@@ -109,7 +109,7 @@ func TestV1Flags(t *testing.T) {
 		if err != nil {
 			t.Errorf("Test failed, got a unexpected error '%s'", err)
 		}
-		if tmp == false {
+		if !tmp {
 			flags, _ := p.Header.GetFlags()
 			t.Errorf("Test failed, expected flags : '%d' , got:  '%d'", infos.result, flags)
 		}
