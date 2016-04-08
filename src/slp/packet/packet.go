@@ -19,13 +19,6 @@ const (
 
 var Encoding = binary.BigEndian
 
-type ReadError struct {
-}
-
-func (e *ReadError) Error() string {
-	return "Cannot read data"
-}
-
 // Packet is the main struct for SLP packet.
 // It's generique depending of the Version
 // and Function

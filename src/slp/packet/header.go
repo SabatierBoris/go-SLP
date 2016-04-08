@@ -1,7 +1,6 @@
 package packet
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"sync"
@@ -22,14 +21,6 @@ var headers = struct {
 	m [NbVersion]HeaderContructor
 	sync.RWMutex
 }{}
-
-type VersionError struct {
-	version Version
-}
-
-func (e *VersionError) Error() string {
-	return fmt.Sprintf("SLP V%d isn't supported", e.version)
-}
 
 func RegisterHeader(version Version, constructor HeaderContructor) {
 	headers.Lock()
