@@ -1,7 +1,6 @@
 package packet
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"sync"
@@ -45,14 +44,14 @@ func RegisterFunction(version Version, function Function, constructor FunctionCo
 func GetFunction(id Version, function Function) (f SLPFunction, err error) {
 	err = nil
 	if function >= NbFunction {
-		err = fmt.Errorf("SLP function %d is not supported", function)
+		err = &FunctionError{function, nil}
 		return
 	}
 	functions.RLock()
 	ctor := functions.m[id][function]
 	functions.RUnlock()
 	if ctor == nil {
-		err = fmt.Errorf("SLP function %d for V%d is not supported", function, id)
+		err = &FunctionError{function, &id}
 		return
 	}
 	f = ctor()

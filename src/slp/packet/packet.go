@@ -2,7 +2,6 @@ package packet
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 )
 
@@ -46,18 +45,15 @@ func GetPacket(data io.Reader) (p Packet, err error) {
 		return
 	}
 	if err = h.Validate(); err != nil {
-		err = fmt.Errorf("Error during validation of the header : %s", err)
 		return
 	}
 	p.Header = h
 
 	var f SLPFunction
 	if f, err = GetFunction(p.Version, p.Header.GetFunction()); err != nil {
-		err = fmt.Errorf("Error during getting function type : %s", err)
 		return
 	}
 	if err = f.Read(data); err != nil {
-		err = fmt.Errorf("Error during parsing function : %s", err)
 		return
 	}
 	p.Data = f

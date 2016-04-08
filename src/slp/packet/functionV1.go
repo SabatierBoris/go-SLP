@@ -2,7 +2,6 @@ package packet
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 )
 
@@ -24,7 +23,7 @@ type SrvAckV1 struct {
 
 func (f *SrvAckV1) Read(data io.Reader) (err error) {
 	if err = binary.Read(data, Encoding, f); err != nil {
-		err = fmt.Errorf("Error during parsing SrvAckV1 : %s", err)
+		err = &ReadError{}
 		return
 	}
 	return

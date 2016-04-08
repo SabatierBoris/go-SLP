@@ -2,7 +2,6 @@ package packet
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 	"regexp"
 )
@@ -172,11 +171,11 @@ var SupportedLanguages = map[string]string{
 
 func (h *HeaderV1) Validate() (err error) {
 	if h.Flags&0x7 != 0 {
-		err = fmt.Errorf("Error rsvd should be to 0 and is %d", h.Flags&0x7)
+		err = &FlagError{"rsvd", 0, h.Flags & 0x7}
 		return
 	}
 	if h.Dialect != 0 {
-		err = fmt.Errorf("Error dialect should be to 0 and is %d", h.Flags&0x7)
+		err = &DialectError{h.Dialect}
 		return
 	}
 	lang, err := h.GetLanguageCode()
@@ -185,7 +184,7 @@ func (h *HeaderV1) Validate() (err error) {
 	}
 	_, ok := SupportedLanguages[lang]
 	if !ok {
-		err = fmt.Errorf("Error LanguageCode %s isn't supported", lang)
+		err = &LanguageError{&lang}
 		return
 	}
 	return
@@ -205,7 +204,7 @@ func (h *HeaderV1) GetLanguageCode() (r string, err error) {
 	r = string(h.LanguageCode[:2])
 	re := regexp.MustCompile("^[a-zA-Z0-9_]{2}$")
 	if !re.MatchString(r) {
-		err = fmt.Errorf("Error LanguageCode ins't set")
+		err = &LanguageError{nil}
 		return
 	}
 	return
