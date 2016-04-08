@@ -213,7 +213,7 @@ func (h *HeaderV1) GetLanguageCode() (r string, err error) {
 
 func (h *HeaderV1) Read(data io.Reader) (err error) {
 	if err = binary.Read(data, Encoding, h); err != nil {
-		err = fmt.Errorf("Error during parsing HeaderV1 : %s", err)
+		err = &ReadError{}
 		return
 	}
 	return

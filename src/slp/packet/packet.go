@@ -50,7 +50,6 @@ func GetPacket(data io.Reader) (p Packet, err error) {
 		return
 	}
 	if err = h.Read(data); err != nil {
-		err = fmt.Errorf("Error during parsing header : %s", err)
 		return
 	}
 	if err = h.Validate(); err != nil {

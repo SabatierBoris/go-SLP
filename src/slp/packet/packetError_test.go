@@ -14,6 +14,7 @@ func TestVersionToto(t *testing.T) {
 		{[]byte{0xFF}, &VersionError{}},
 		{[]byte{0x02}, &VersionError{}},
 		{[]byte{}, &ReadError{}},
+		{[]byte{0x01}, &ReadError{}},
 	}
 
 	for _, infos := range datas {
@@ -26,16 +27,6 @@ func TestVersionToto(t *testing.T) {
 			t.Errorf("Test failed, expected an %s, got:  '%s'", reflect.TypeOf(infos.result), err)
 		}
 		t.Logf("Got the error %s", err)
-	}
-}
-
-func TestMissingError(t *testing.T) {
-	data := []byte{0x01}
-	buf := bytes.NewReader(data)
-
-	p, err := GetPacket(buf) //TODO Check if the err is the right one
-	if err == nil {
-		t.Errorf("Test failed, expected an error, got:  '%v'", p)
 	}
 }
 
