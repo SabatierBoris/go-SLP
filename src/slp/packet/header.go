@@ -6,6 +6,7 @@ import (
 	"sync"
 )
 
+// Header is the interface for all SLP Header version
 type Header interface {
 	Read(io.Reader) error
 	GetFunction() Function
@@ -15,6 +16,7 @@ type Header interface {
 	Validate() error
 }
 
+// HeaderContructor is the interface for all SLP Header constructor
 type HeaderContructor func() Header
 
 var headers = struct {
@@ -22,6 +24,7 @@ var headers = struct {
 	sync.RWMutex
 }{}
 
+// RegisterHeader permit to dynamically add supported SLP Header version
 func RegisterHeader(version Version, constructor HeaderContructor) {
 	headers.Lock()
 	headers.m[version] = constructor
@@ -29,6 +32,7 @@ func RegisterHeader(version Version, constructor HeaderContructor) {
 	log.Printf("Header V%d is registered\n", version)
 }
 
+// GetHeader get the SLP Header type depending of the SLP Version
 func GetHeader(id Version) (h Header, err error) {
 	err = nil
 	if id >= NbVersion {
