@@ -16,6 +16,7 @@ const (
 	NbVersion Version = iota
 )
 
+// Encoding is the current encoding way for SLP message
 var Encoding = binary.BigEndian
 
 // Packet is the main struct for SLP packet.
