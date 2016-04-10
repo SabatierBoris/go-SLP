@@ -1,4 +1,4 @@
-package packet
+package slp
 
 import (
 	"encoding/binary"
