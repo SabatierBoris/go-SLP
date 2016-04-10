@@ -6,8 +6,10 @@ import (
 	"regexp"
 )
 
+// HeaderFlags is use for get flags store in Header V1
 type HeaderFlags uint8
 
+// Values of V1 Flags
 const (
 	_        HeaderFlags = 1 << iota //0x01
 	_        HeaderFlags = 1 << iota //0x02
@@ -19,6 +21,7 @@ const (
 	V1FlagsO HeaderFlags = 1 << iota //0x80
 )
 
+// HeaderV1 is the structure of an SLP Header for V1
 type HeaderV1 struct {
 	Function     Function
 	Length       uint16
@@ -29,6 +32,7 @@ type HeaderV1 struct {
 	Xid          uint16
 }
 
+// SupportedLanguages are the list of supportedLanguage
 var SupportedLanguages = map[string]string{
 	"aa": "Afar",
 	"ab": "Abkhazian",
@@ -169,6 +173,7 @@ var SupportedLanguages = map[string]string{
 	"zu": "Zulu",
 }
 
+// Validate check if the Header is conforme
 func (h *HeaderV1) Validate() (err error) {
 	if h.Flags&0x7 != 0 {
 		err = &FlagError{"rsvd", 0, h.Flags & 0x7}
@@ -190,16 +195,19 @@ func (h *HeaderV1) Validate() (err error) {
 	return
 }
 
+// HasFlags check if the flag f are rised in the header
 func (h *HeaderV1) HasFlags(f HeaderFlags) (r bool, err error) {
 	r = ((h.Flags & f) == f)
 	return
 }
 
+// GetFlags return all flag in the header
 func (h *HeaderV1) GetFlags() (f HeaderFlags, err error) {
 	f = h.Flags
 	return
 }
 
+// GetLanguageCode return the full name of 2 char language Code
 func (h *HeaderV1) GetLanguageCode() (r string, err error) {
 	r = string(h.LanguageCode[:2])
 	re := regexp.MustCompile("^[a-zA-Z0-9_]{2}$")
@@ -210,6 +218,7 @@ func (h *HeaderV1) GetLanguageCode() (r string, err error) {
 	return
 }
 
+// Read parse the data for extract packet information
 func (h *HeaderV1) Read(data io.Reader) (err error) {
 	if err = binary.Read(data, Encoding, h); err != nil {
 		err = &ReadError{}
@@ -218,11 +227,13 @@ func (h *HeaderV1) Read(data io.Reader) (err error) {
 	return
 }
 
+// GetFunction return the function ID
 func (h *HeaderV1) GetFunction() (f Function) {
 	f = h.Function
 	return
 }
 
+// HeaderV1Constructor is the constructor for HeaderV1 packet
 func HeaderV1Constructor() Header {
 	return &HeaderV1{}
 }
