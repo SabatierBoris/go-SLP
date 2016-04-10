@@ -9,6 +9,7 @@ import (
 // Function is enum for SLP Function mapping
 type Function uint8
 
+// Values of supported SLP Function.
 const (
 	_           Function = iota
 	SrvReq      Function = iota
