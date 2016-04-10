@@ -25,7 +25,7 @@ var Encoding = binary.BigEndian
 type Packet struct {
 	Version Version
 	Header  Header
-	Data    SLPFunction
+	Data    Function
 }
 
 // GetPacket create a Packet with data read in a io.Reader.
@@ -50,7 +50,7 @@ func GetPacket(data io.Reader) (p Packet, err error) {
 	}
 	p.Header = h
 
-	var f SLPFunction
+	var f Function
 	if f, err = GetFunction(p.Version, p.Header.GetFunction()); err != nil {
 		return
 	}

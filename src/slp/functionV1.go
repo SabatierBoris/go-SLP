@@ -34,7 +34,7 @@ func (f *SrvAckV1) Read(data io.Reader) (err error) {
 }
 
 // SrvAckV1Constructor is the constructor for SrvAckV1 packet
-func SrvAckV1Constructor() SLPFunction {
+func SrvAckV1Constructor() Function {
 	return &SrvAckV1{}
 }
 

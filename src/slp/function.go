@@ -25,13 +25,13 @@ const (
 	NbFunction  FunctionID = iota
 )
 
-// SLPFunction is the interface for all SLP Function version
-type SLPFunction interface {
+// Function is the interface for all SLP Function version
+type Function interface {
 	Read(io.Reader) error
 }
 
 // FunctionContructor is the interface for all SLP Function constructor
-type FunctionContructor func() SLPFunction
+type FunctionContructor func() Function
 
 var functions = struct {
 	m [NbVersion][NbFunction]FunctionContructor
@@ -47,7 +47,7 @@ func RegisterFunction(version Version, functionID FunctionID, constructor Functi
 }
 
 // GetFunction get the SLP Function type depending of the SLP Version and FunctionID
-func GetFunction(id Version, functionID FunctionID) (f SLPFunction, err error) {
+func GetFunction(id Version, functionID FunctionID) (f Function, err error) {
 	err = nil
 	if functionID >= NbFunction {
 		err = &FunctionError{functionID, nil}
