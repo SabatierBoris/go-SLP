@@ -6,23 +6,23 @@ import (
 	"sync"
 )
 
-// Function is enum for SLP Function mapping
-type Function uint8
+// FunctionID is enum for SLP Function mapping
+type FunctionID uint8
 
-// Values of supported SLP Function.
+// Values of supported SLP FunctionID.
 const (
-	_           Function = iota
-	SrvReq      Function = iota
-	SrvRply     Function = iota
-	SrvReg      Function = iota
-	SrvDereg    Function = iota
-	SrvAck      Function = iota
-	AttrRqst    Function = iota
-	AttrRply    Function = iota
-	DAAdvert    Function = iota
-	SrvTypeRqst Function = iota
-	SrvTypeRply Function = iota
-	NbFunction  Function = iota
+	_           FunctionID = iota
+	SrvReq      FunctionID = iota
+	SrvRply     FunctionID = iota
+	SrvReg      FunctionID = iota
+	SrvDereg    FunctionID = iota
+	SrvAck      FunctionID = iota
+	AttrRqst    FunctionID = iota
+	AttrRply    FunctionID = iota
+	DAAdvert    FunctionID = iota
+	SrvTypeRqst FunctionID = iota
+	SrvTypeRply FunctionID = iota
+	NbFunction  FunctionID = iota
 )
 
 // SLPFunction is the interface for all SLP Function version
@@ -38,26 +38,26 @@ var functions = struct {
 	sync.RWMutex
 }{}
 
-// RegisterFunction permit to dynamically add supported SLP Function for an SLP version and Function id
-func RegisterFunction(version Version, function Function, constructor FunctionContructor) {
+// RegisterFunction permit to dynamically add supported SLP Function for an SLP version and FunctionID
+func RegisterFunction(version Version, functionID FunctionID, constructor FunctionContructor) {
 	functions.Lock()
-	functions.m[version][function] = constructor
+	functions.m[version][functionID] = constructor
 	functions.Unlock()
-	log.Printf("Function %d (V%d) is registered\n", function, version)
+	log.Printf("Function %d (V%d) is registered\n", functionID, version)
 }
 
-// GetFunction get the SLP Function type depending of the SLP Version and Function id
-func GetFunction(id Version, function Function) (f SLPFunction, err error) {
+// GetFunction get the SLP Function type depending of the SLP Version and FunctionID
+func GetFunction(id Version, functionID FunctionID) (f SLPFunction, err error) {
 	err = nil
-	if function >= NbFunction {
-		err = &FunctionError{function, nil}
+	if functionID >= NbFunction {
+		err = &FunctionError{functionID, nil}
 		return
 	}
 	functions.RLock()
-	ctor := functions.m[id][function]
+	ctor := functions.m[id][functionID]
 	functions.RUnlock()
 	if ctor == nil {
-		err = &FunctionError{function, &id}
+		err = &FunctionError{functionID, &id}
 		return
 	}
 	f = ctor()

@@ -23,7 +23,7 @@ const (
 
 // HeaderV1 is the structure of an SLP Header for V1
 type HeaderV1 struct {
-	Function     Function
+	FunctionID   FunctionID
 	Length       uint16
 	Flags        HeaderFlags
 	Dialect      uint8
@@ -227,9 +227,9 @@ func (h *HeaderV1) Read(data io.Reader) (err error) {
 	return
 }
 
-// GetFunction return the function ID
-func (h *HeaderV1) GetFunction() (f Function) {
-	f = h.Function
+// GetFunction return the functionID
+func (h *HeaderV1) GetFunction() (f FunctionID) {
+	f = h.FunctionID
 	return
 }
 

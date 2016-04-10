@@ -20,16 +20,16 @@ func (e *VersionError) Error() string {
 
 // FunctionError is the error send when the SLP function isn't knowed or not supported for the SLP version
 type FunctionError struct {
-	function Function
-	version  *Version
+	functionID FunctionID
+	version    *Version
 }
 
 func (e *FunctionError) Error() string {
 	var s string
 	if e.version != nil {
-		s = fmt.Sprintf("SLP function %d for V%d isn't supported", e.function, *e.version)
+		s = fmt.Sprintf("SLP functionId %d for V%d isn't supported", e.functionID, *e.version)
 	} else {
-		s = fmt.Sprintf("SLP function %d isn't supported", e.function)
+		s = fmt.Sprintf("SLP functionId %d isn't supported", e.functionID)
 	}
 	return s
 }

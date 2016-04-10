@@ -9,7 +9,7 @@ import (
 // Header is the interface for all SLP Header version
 type Header interface {
 	Read(io.Reader) error
-	GetFunction() Function
+	GetFunction() FunctionID
 	HasFlags(HeaderFlags) (bool, error)
 	GetFlags() (HeaderFlags, error)
 	GetLanguageCode() (string, error)
